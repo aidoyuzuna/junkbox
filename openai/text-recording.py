@@ -8,7 +8,13 @@ openai.organization = setting.ORGANIZATION
 openai.api_key = setting.API_KEY
 
 
-def setapp(page: ft.Page):
+class Widget:
+    def __init__(self):
+        self.text_field = ft.TextField(max_lines=10, bgcolor="#333333", label="ここに出力結果がでます", read_only=True,
+                                       value="")
+        self.button = ft.ElevatedButton(text="録音開始", on_click=self.btn_recording)
+
+    @staticmethod
     def btn_recording(e):
         r = sr.Recognizer()
         with sr.Microphone(sample_rate=16_000) as source:
@@ -16,14 +22,12 @@ def setapp(page: ft.Page):
             audio_data = BytesIO(audio.get_wav_data())
             audio_data.name = "from_mic.wav"
             transcript = openai.Audio.transcribe("whisper-1", audio_data)
-            page.update()
+            e.page.update()
 
-    recoding_text = ""
+def setapp(page: ft.Page):
+    widgets = Widget()
     page.title = "録音アプリ"
-    page.add(
-        ft.TextField(max_lines=10, bgcolor="#333333", label="ここに出力結果がでます", read_only=True,
-                     value=recoding_text),
-        ft.ElevatedButton(text="録音開始", on_click=btn_recording))
+    page.add(widgets.text_field,widgets.button)
 
 
 def main():
