@@ -14,23 +14,16 @@ class Countdown:
 
     def countdown_btn_click(self, e):
         stop_flag = False
-
         self.count_down_button.text = "ストップ"
         self.count_down_button.bgcolor = "#F44336"
         self.count_down_button.on_click = self.countdown_btn_stop_click()
-        while self.set_time > 0:
-            self.countdown()
-            if stop_flag == True:
-                break
-
-        def countdown_btn_stop_click():
-            stop_flag = True
 
     def countdown(self):
-        time.sleep(1)
-        self.set_time -= 1
-        self.count_down_label.value = elapsed_time_str(self.set_time)
-        self.page.update()
+        while self.set_time > 0:
+            time.sleep(1)
+            self.set_time -= 1
+            self.count_down_label.value = elapsed_time_str(self.set_time)
+            self.page.update()
 
 
 def elapsed_time_str(seconds):
@@ -54,6 +47,7 @@ def setapp(page: ft.Page):
         ],
         ),
     )
+    widgets.countdown()
 
 
 def main():
