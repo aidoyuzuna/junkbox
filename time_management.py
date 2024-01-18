@@ -5,6 +5,7 @@ from flet import margin, alignment
 
 class Countdown:
     def __init__(self, page, set_time):
+        self.stop_flag = False
         self.set_time = set_time
         self.page = page
         self.count_down_label = ft.Text(elapsed_time_str(self.set_time), size=30)
@@ -13,10 +14,10 @@ class Countdown:
                                                    on_click=self.countdown_btn_click)
 
     def countdown_btn_click(self, e):
-        stop_flag = False
         self.count_down_button.text = "ストップ"
         self.count_down_button.bgcolor = "#F44336"
-        self.count_down_button.on_click = self.countdown_btn_stop_click()
+        self.count_down_button.on_click = self.countdown_btn_stop_click
+        self.countdown()
 
     def countdown(self):
         while self.set_time > 0:
@@ -24,6 +25,11 @@ class Countdown:
             self.set_time -= 1
             self.count_down_label.value = elapsed_time_str(self.set_time)
             self.page.update()
+            if self.stop_flag == True:
+                break
+
+    def countdown_btn_stop_click(self,e):
+        self.stop_flag = True
 
 
 def elapsed_time_str(seconds):
@@ -38,7 +44,8 @@ def elapsed_time_str(seconds):
 def setapp(page: ft.Page):
     widgets = Countdown(page, 900)
     page.title = "作業用タイマー"
-    page.window_height = 1350
+    page.window_width = 400
+    page.window_height = 200
 
     page.add(
         ft.Column([
@@ -47,7 +54,6 @@ def setapp(page: ft.Page):
         ],
         ),
     )
-    widgets.countdown()
 
 
 def main():
