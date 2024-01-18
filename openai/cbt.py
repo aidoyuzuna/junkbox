@@ -43,8 +43,8 @@ class Widget:
         ]
 
         response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
-            # model="gpt-4",
+            # model="gpt-3.5",
+            model="gpt-4-1106-preview",
             messages=message,
             n=1,
             stop=None,
@@ -76,7 +76,7 @@ def setapp(page: ft.Page):
             ft.Container(widgets.cbt_button, alignment=alignment.center),
             ft.Container(widgets.answer_label, margin=margin.only(top=50)),
             ft.Container(widgets.answer),
-            ft.Container(widgets.copy_button, alignment=alignment.center),
+            ft.Container(widgets.copy_button, margin=margin.only(top=30), alignment=alignment.center),
         ],
         ),
     )
