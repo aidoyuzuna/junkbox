@@ -1,0 +1,5 @@
+# 相談内容
+$contents
+
+# 診断結果
+$result
