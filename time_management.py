@@ -3,7 +3,7 @@ import flet as ft
 from flet import margin, alignment
 
 
-class Countdown:
+class CowntdownTimerWidgets:
     def __init__(self, page, time_left):
         self.is_running = True
         self.time_left = time_left
@@ -40,7 +40,7 @@ def elapsed_time_str(seconds):
 
 
 def setapp(page: ft.Page):
-    widgets = Countdown(page, 900)
+    widgets = CowntdownTimerWidgets(page, 900)
     page.title = "作業用タイマー"
     page.window_width = 400
     page.window_height = 200
