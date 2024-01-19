@@ -1,14 +1,14 @@
 class Potato:
     def __init__(self, weight):
-        self.weight = weight
+        self.potato = weight
 
 
 class KitchenScale:
     def __init__(self):
         self.potato_weight = 0.0
 
-    def scale_put_on(self, weight):
-        self.potato_weight += weight
+    def scale_put_on(self, potato):
+        self.potato_weight += potato.potato
 
     def scale_clear(self):
         self.potato_weight = 0.0
