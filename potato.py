@@ -7,11 +7,8 @@ class KitchenScale:
     def __init__(self):
         self.potato_weight = 0.0
 
-    def scale_put_on(self, potato):
-        if isinstance(potato, Potato):
-            self.potato_weight += potato.weight  # ここでPotatoのweight属性を加算
-        else:
-            raise ValueError("scale_put_on requires a Potato instance.")
+    def scale_put_on(self, weight):
+        self.potato_weight += weight
 
     def scale_clear(self):
         self.potato_weight = 0.0
