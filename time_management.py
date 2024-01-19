@@ -5,7 +5,7 @@ from flet import margin, alignment
 
 class Countdown:
     def __init__(self, page, time_left):
-        self.stop_flag = True
+        self.is_running = True
         self.time_left = time_left
         self.page = page
         self.time_left_label = ft.Text(elapsed_time_str(self.time_left), size=30)
@@ -20,16 +20,14 @@ class Countdown:
         self.countdown()
 
     def countdown(self):
-        while self.time_left > 0:
+        while self.time_left > 0 and self.is_running:
             time.sleep(1)
             self.time_left -= 1
             self.time_left_label.value = elapsed_time_str(self.time_left)
             self.page.update()
-            if not self.stop_flag:
-                break
 
     def countdown_btn_stop_click(self, e):
-        self.stop_flag = False
+        self.is_running = False
 
 
 def elapsed_time_str(seconds):
