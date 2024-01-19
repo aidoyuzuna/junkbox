@@ -5,16 +5,16 @@ class Potato:
 
 class KitchenScale:
     def __init__(self):
-        self.potato_weight = 0.0
+        self.total_weight = 0.0
 
     def scale_put_on(self, potato):
-        self.potato_weight += potato.weight
+        self.total_weight += potato.weight
 
-    def scale_clear(self):
-        self.potato_weight = 0.0
+    def clear(self):
+        self.total_weight = 0.0
 
-    def scale_weighing(self):
-        return self.potato_weight
+    def get_total_weight(self):
+        return self.total_weight
 
 
 def main():
@@ -23,9 +23,9 @@ def main():
     scale.scale_put_on(potato1)
     potato2 = Potato(3.0)
     scale.scale_put_on(potato2)
-    print(scale.scale_weighing())
-    scale.scale_clear()
-    print(scale.scale_weighing())
+    print(scale.get_total_weight())
+    scale.clear()
+    print(scale.get_total_weight())
 
 
 if __name__ == "__main__":
