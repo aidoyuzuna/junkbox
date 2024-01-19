@@ -13,7 +13,7 @@ class Kitchenscale():
     def clear(self):
         self.scale = 0
 
-    def get_potato(self):
+    def get_wight(self):
         return self.scale
 
 
@@ -23,9 +23,9 @@ def main():
     scale.put_potato(potato1)
     potato2 = Potato(3.0)
     scale.put_potato(potato2)
-    print(scale.get_potato())
+    print(scale.get_wight())
     scale.clear()
-    print(scale.get_potato())
+    print(scale.get_wight())
 
 
 if __name__ == '__main__':
