@@ -112,8 +112,14 @@ class Pluto(Planet):
 
 
 # 逆行判定（逆行がTrue）
-def return_planet(today, yesterday):
-    if today < yesterday:
+def retrograde_planet(today: float, yesterday: float):
+    if 358 <= today <= 360 and 0 <= yesterday <= 3:
+        return True
+
+    elif 0 <= today <= 3 and 358 <= yesterday <= 360:
+        return False
+
+    elif today < yesterday:
         return True
 
     else:
@@ -122,7 +128,10 @@ def return_planet(today, yesterday):
 
 def main():
     # 今日の日付とタイムゾーン指定
-    now_datetime = datetime.datetime.now()
+    # now_datetime = datetime.datetime.now()
+
+    now_datetime = datetime.datetime(2022, 11, 21, 12, 0, 0)
+    # now_datetime = datetime.datetime(2022, 12, 21, 12, 0, 0)
     yesterday_datetime = now_datetime - datetime.timedelta(days=1)
     timezone_offset = 9
 
@@ -147,6 +156,8 @@ def main():
         yesterday_transit.append(
             yesterday_planet[i].planet_calc(yesterday_datetime, timezone_offset))
 
+        print(today_transit[i][0][0])
+
         # 惑星名の取得
         planet_name = today_planet[i].planet_return()
 
@@ -154,7 +165,7 @@ def main():
         today_sign.append(today_planet[i].decision_sign(today_transit[i][0][0]))
 
         # 逆行判定
-        return_flag.append(return_planet(today_transit[i][0][0], yesterday_transit[i][0][0]))
+        return_flag.append(retrograde_planet(today_transit[i][0][0], yesterday_transit[i][0][0]))
 
         # テキストの追加（逆行があるか否かで文章が変わる）
         if return_flag[i]:
