@@ -113,25 +113,18 @@ class Pluto(Planet):
 
 # 逆行判定（逆行がTrue）
 def retrograde_planet(today: float, yesterday: float):
-    if 358 <= today <= 360 and 0 <= yesterday <= 3:
+    if today > yesterday + 180:
         return True
-
-    elif 0 <= today <= 3 and 358 <= yesterday <= 360:
-        return False
-
-    elif today < yesterday:
-        return True
-
     else:
-        return False
+        return today < yesterday
 
 
 def main():
     # 今日の日付とタイムゾーン指定
     # now_datetime = datetime.datetime.now()
 
-    now_datetime = datetime.datetime(2022, 11, 21, 12, 0, 0)
-    # now_datetime = datetime.datetime(2022, 12, 21, 12, 0, 0)
+    now_datetime = datetime.datetime(1994, 1, 12, 12, 0, 0)
+    # now_datetime = datetime.datetime(2022, 12, 20, 12, 0, 0)
     yesterday_datetime = now_datetime - datetime.timedelta(days=1)
     timezone_offset = 9
 
@@ -145,9 +138,7 @@ def main():
     # 各種リストの初期化
     today_transit = []
     yesterday_transit = []
-    today_sign = []
-    return_flag = []
-    result_text = f"【{now_datetime:%Y/%m/%d %H:%M} 現在のトランジット状況】\n"
+    result_text = f"【{now_datetime:%Y/%m/%d %H:%M} 現在のトランジット】\n"
 
     # 惑星の計算・判定
     for i in range(10):
@@ -156,23 +147,12 @@ def main():
         yesterday_transit.append(
             yesterday_planet[i].planet_calc(yesterday_datetime, timezone_offset))
 
-        print(today_transit[i][0][0])
-
-        # 惑星名の取得
-        planet_name = today_planet[i].planet_return()
-
-        # 星座名の取得
-        today_sign.append(today_planet[i].decision_sign(today_transit[i][0][0]))
-
-        # 逆行判定
-        return_flag.append(retrograde_planet(today_transit[i][0][0], yesterday_transit[i][0][0]))
-
         # テキストの追加（逆行があるか否かで文章が変わる）
-        if return_flag[i]:
-            result_text += f"{planet_name}：{today_sign[i]}{int(today_transit[i][0][0] % 30)}度（逆行中）\n"
+        if retrograde_planet(today_transit[i][0][0], yesterday_transit[i][0][0]):
+            result_text += f"{today_planet[i].planet_return()}：{today_planet[i].decision_sign(today_transit[i][0][0])}{int(today_transit[i][0][0] % 30)}度（逆行中）\n"
 
         else:
-            result_text += f"{planet_name}：{today_sign[i]}{int(today_transit[i][0][0] % 30)}度\n"
+            result_text += f"{today_planet[i].planet_return()}：{today_planet[i].decision_sign(today_transit[i][0][0])}{int(today_transit[i][0][0] % 30)}度\n"
 
     # 結果を出力
     print(result_text)
