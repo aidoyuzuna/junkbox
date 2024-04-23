@@ -123,7 +123,7 @@ def main():
     # 今日の日付とタイムゾーン指定
     # now_datetime = datetime.datetime.now()
 
-    now_datetime = datetime.datetime(1994, 1, 12, 12, 0, 0)
+    now_datetime = datetime.datetime(1994, 1, 11, 18, 0, 0)
     # now_datetime = datetime.datetime(2022, 12, 20, 12, 0, 0)
     yesterday_datetime = now_datetime - datetime.timedelta(days=1)
     timezone_offset = 9
@@ -136,23 +136,19 @@ def main():
     planet_name = []
 
     # 各種リストの初期化
-    today_transit = []
-    yesterday_transit = []
     result_text = f"【{now_datetime:%Y/%m/%d %H:%M} 現在のトランジット】\n"
 
     # 惑星の計算・判定
     for i in range(10):
-        # 今日と昨日の惑星を計算
-        today_transit.append(today_planet[i].planet_calc(now_datetime, timezone_offset))
-        yesterday_transit.append(
-            yesterday_planet[i].planet_calc(yesterday_datetime, timezone_offset))
+        today_transit = today_planet[i].planet_calc(now_datetime, timezone_offset)
+        yesterday_transit = yesterday_planet[i].planet_calc(yesterday_datetime, timezone_offset)
 
         # テキストの追加（逆行があるか否かで文章が変わる）
-        if retrograde_planet(today_transit[i][0][0], yesterday_transit[i][0][0]):
-            result_text += f"{today_planet[i].planet_return()}：{today_planet[i].decision_sign(today_transit[i][0][0])}{int(today_transit[i][0][0] % 30)}度（逆行中）\n"
+        if retrograde_planet(today_transit[0][0], yesterday_transit[0][0]):
+            result_text += f"{today_planet[i].planet_return()}：{today_planet[i].decision_sign(today_transit[0][0])}{int(today_transit[0][0] % 30)}度（逆行中）\n"
 
         else:
-            result_text += f"{today_planet[i].planet_return()}：{today_planet[i].decision_sign(today_transit[i][0][0])}{int(today_transit[i][0][0] % 30)}度\n"
+            result_text += f"{today_planet[i].planet_return()}：{today_planet[i].decision_sign(today_transit[0][0])}{int(today_transit[0][0] % 30)}度\n"
 
     # 結果を出力
     print(result_text)
