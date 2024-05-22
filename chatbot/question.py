@@ -4,6 +4,7 @@ from openai import OpenAI
 import anthropic
 import os
 from dotenv import load_dotenv
+import winsound
 
 load_dotenv()
 
@@ -57,6 +58,7 @@ def main(page: ft.Page):
 
         chatgpt_response.value = chatgpt_message.choices[0].message.content
         claude_response.value = claude_message.content[0].text
+        winsound.PlaySound("fin.wav", winsound.SND_FILENAME)
         send_button.disabled = False
         reset_button.disabled = False
         page.update()
