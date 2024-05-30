@@ -6,6 +6,7 @@ from pyjsoncanvas import (
     FileNode,
 )
 
+
 def extract_header(file_path: Path) -> dict:
     with open(file_path, "r", encoding="utf-8") as f:
         lines = f.readlines()
@@ -24,6 +25,7 @@ def extract_header(file_path: Path) -> dict:
     header_str = "\n".join(header_lines)
     return yaml.safe_load(header_str)
 
+
 def has_tag(file_path: Path, tag: str) -> bool:
     header = extract_header(file_path)
     if header is not None:
@@ -33,34 +35,37 @@ def has_tag(file_path: Path, tag: str) -> bool:
     content = file_path.read_text(encoding="utf-8")
     return f"#{tag}" in content
 
+
 def main():
     vault_root = Path(r"I:\\100_Output\\110_Git\\yuzunamemo\\quartz\\content")
     vault_path = vault_root / "02_Inbox"
     search_tag = "西洋占星術"
-    canvas_path = vault_root / f"06_Canvas/{search_tag}.canvas"
+    canvas_path = vault_root / f"06_Canvas\\{search_tag}.canvas"
 
-    json_open= json_open = open(canvas_path, 'r',encoding='utf-8')
-    loaded_canvas = json.load(json_open)
+    with open(canvas_path, 'r', encoding='utf-8') as file:
+        json_str = file.read()
+        loaded_canvas = Canvas.from_json(json_str)
+        json_load = open(canvas_path, 'r', encoding='utf-8')
+        json_data = json.load(json_load)
 
     loaded_memo = []
-    
-    for node in loaded_canvas["nodes"]:
-        if node["type"] == "file":
-            loaded_join_path = vault_root / node["file"]
+    for text in json_data["nodes"]:
+        if text["type"] == "file":
+            loaded_join_path = Path(vault_root / f"{text["file"]}")
             loaded_memo.append(loaded_join_path)
-    print(loaded_memo)
 
     matched_files = [
         file_path
-        for file_path in list(vault_path.glob("*.md"))
+        for file_path in vault_path.glob("*.md")
         if has_tag(file_path, search_tag)
     ]
 
-    canvas = Canvas(nodes=[], edges=[])
-    width = 800
-    height = 900
+    width = 400
+    height = 400
 
-    for i, file_path in enumerate(matched_files):
+    set_files = set(matched_files) - set(loaded_memo)
+
+    for i, file_path in enumerate(set_files):
         node = FileNode(
             id=str(i),
             x=0,
@@ -70,10 +75,11 @@ def main():
             file=str(file_path.relative_to(vault_root).as_posix())
         )
 
-    canvas.add_node(node)
-    
+        loaded_canvas.add_node(node)
+
     with open(canvas_path, "w", encoding="utf-8") as f:
-        json.dump(canvas.to_json(), f)
+        f.write(loaded_canvas.to_json())
+
 
 if __name__ == '__main__':
     main()

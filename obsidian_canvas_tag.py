@@ -5,6 +5,7 @@ from pyjsoncanvas import (
     FileNode,
 )
 
+
 def extract_header(file_path: Path) -> dict:
     with open(file_path, "r", encoding="utf-8") as f:
         lines = f.readlines()
