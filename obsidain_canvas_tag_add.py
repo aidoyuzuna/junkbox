@@ -1,4 +1,5 @@
 import yaml
+import json
 from pathlib import Path
 from pyjsoncanvas import (
     Canvas,
@@ -23,7 +24,6 @@ def extract_header(file_path: Path) -> dict:
     header_str = "\n".join(header_lines)
     return yaml.safe_load(header_str)
 
-
 def has_tag(file_path: Path, tag: str) -> bool:
     header = extract_header(file_path)
     if header is not None:
@@ -33,16 +33,26 @@ def has_tag(file_path: Path, tag: str) -> bool:
     content = file_path.read_text(encoding="utf-8")
     return f"#{tag}" in content
 
-
 def main():
-    vault_root = Path(r"I:\05_Output\051_Git\yuzunamemo_old\quartz\content")
-    vault_path = vault_root / "Inbox"
+    vault_root = Path(r"I:\\100_Output\\110_Git\\yuzunamemo\\quartz\\content")
+    vault_path = vault_root / "02_Inbox"
     search_tag = "西洋占星術"
-    canvas_path = Path(r"I:\05_Output\051_Git\yuzunamemo_old\quartz\content\Canvas") / f"summary_{search_tag}.canvas"
+    canvas_path = vault_root / f"06_Canvas/{search_tag}.canvas"
+
+    json_open= json_open = open(canvas_path, 'r',encoding='utf-8')
+    loaded_canvas = json.load(json_open)
+
+    loaded_memo = []
+    
+    for node in loaded_canvas["nodes"]:
+        if node["type"] == "file":
+            loaded_join_path = vault_root / node["file"]
+            loaded_memo.append(loaded_join_path)
+    print(loaded_memo)
 
     matched_files = [
         file_path
-        for file_path in vault_path.glob("*.md")
+        for file_path in list(vault_path.glob("*.md"))
         if has_tag(file_path, search_tag)
     ]
 
@@ -60,11 +70,10 @@ def main():
             file=str(file_path.relative_to(vault_root).as_posix())
         )
 
-        canvas.add_node(node)
-
+    canvas.add_node(node)
+    
     with open(canvas_path, "w", encoding="utf-8") as f:
-        f.write(canvas.to_json())
-
+        json.dump(canvas.to_json(), f)
 
 if __name__ == '__main__':
     main()
