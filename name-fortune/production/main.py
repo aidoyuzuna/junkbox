@@ -1,5 +1,7 @@
+import json
 import pathlib
-import pandas
+import kyokaku_data
+import message_data
 
 
 def print_dbg(msg):
@@ -13,44 +15,50 @@ def print_dbg(msg):
     print(type(msg))
 
 
-def read_csv(dir: pathlib):
-    """文字と画数が入ったCSVファイルを読み込む
+def read_json(kanji_dir: pathlib, kana_dir: pathlib, result_dir: pathlib) -> list:
+    """文字と画数が入ったjsonファイルを読み込む
 
     Args:
-        dir (pathlib): CSVのパス
+        dir (pathlib): jsonのパス
 
     Returns:
         list: 文字カラムのデータ
         list: 画数カラムのデータ
+        list: 結果のデータ
     """
-    print("画数csvファイルを読み込みます。少々お待ちください。")
+    print("jsonファイルを読み込みます。少々お待ちください。")
 
     try:
-        csv_data: list = pandas.read_csv(dir, encoding="utf-8")
+        with kanji_dir.open("r", encoding="utf-8") as f:
+            json_kanji_data: list = json.load(f)
+
+        with kana_dir.open("r", encoding="utf-8") as f:
+            json_kana_data: list = json.load(f)
+
+        with result_dir.open("r", encoding="utf-8") as f:
+            json_result_data: list = json.load(f)
 
     except FileNotFoundError as e:
         print(
-            "エラー！画数csvが見つかりませんでした。パスとファイル名を確認してください。"
+            "エラー！jsonファイルが見つかりませんでした。パスとファイル名を確認してください。"
         )
         raise
 
-    moji_column = csv_data.loc[:, "moji"]
-    kakusu_column = csv_data.loc[:, "kakusu"]
-    return moji_column, kakusu_column
+    return json_kanji_data, json_kana_data, json_result_data
 
 
-def kakushu_check(sei: str, mei: str, moji_list: list, kakusu_list: list) -> list:
+def kakushu_check(sei: str, mei: str, kanji_list: list, kana_list: list) -> list:
     """画数をチェックする
 
     Args:
         sei (str): 画数を知りたい姓
         mei (str): 画数を知りたい名
-        moji_list (list): read_csvで取得した文字カラムデータ
-        kakusu_list (list): read_csvで取得した画数カラムデータ
+        kanji_list (list): read_jsonで取得した漢字データ
+        kana_list (list): read_jsonで取得したかなデータ
 
     Raises:
-        ValueError: 文字カラムデータの中に該当する文字がなかった場合（姓）
-        ValueError: 文字カラムデータの中に該当する文字がなかった場合（名）
+        ValueError: 文字データの中に該当する文字がなかった場合（姓）
+        ValueError: 文字データの中に該当する文字がなかった場合（名）
 
     Returns:
         list: 姓の画数データ
@@ -65,18 +73,26 @@ def kakushu_check(sei: str, mei: str, moji_list: list, kakusu_list: list) -> lis
     try:
         for a in range(len(sei)):
             found = False
-            for i in range(len(moji_list)):
-                if sei[a] == moji_list[i]:
-                    result_sei.append(kakusu_list[i])
+            for i in range(len(kanji_list)):
+                if sei[a] == kanji_list[i]["kanji"]:
+                    result_sei.append(kanji_list[i]["kakusu"])
+                    found = True
+            for i in range(len(kana_list)):
+                if sei[a] == kana_list[i]["kanji"]:
+                    result_sei.append(kana_list[i]["kakusu"])
                     found = True
             if not found:
                 raise ValueError(f"姓の文字「{sei[a]}」が見つかりませんでした。")
 
         for a in range(len(mei)):
             found = False
-            for i in range(len(moji_list)):
-                if mei[a] == moji_list[i]:
-                    result_mei.append(kakusu_list[i])
+            for i in range(len(kanji_list)):
+                if mei[a] == kanji_list[i]["kanji"]:
+                    result_mei.append(kanji_list[i]["kakusu"])
+                    found = True
+            for i in range(len(kana_list)):
+                if mei[a] == kana_list[i]["kanji"]:
+                    result_mei.append(kana_list[i]["kakusu"])
                     found = True
             if not found:
                 raise ValueError(f"名の文字「{mei[a]}」が見つかりませんでした。")
@@ -87,8 +103,27 @@ def kakushu_check(sei: str, mei: str, moji_list: list, kakusu_list: list) -> lis
     return result_sei, result_mei
 
 
-def calc_kakusu(sei: list, mei: list):
-    """画数を計算
+def calc_tenkaku(sei: list) -> int:
+    """地角を計算
+
+    Args:
+        sei (list): kakushu_check()で取得した姓の画数
+
+    Returns:
+        int: 画数の合計
+        str: 吉凶
+        str: メッセージ
+    """
+    calc_sei = 0
+
+    for a in range(len(sei)):
+        calc_sei += sei[a][0]
+
+    return calc_sei
+
+
+def calc_chikaku(mei: list) -> int:
+    """地角を計算
 
     Args:
         sei (list): kakushu_check()で取得した姓の画数
@@ -97,35 +132,87 @@ def calc_kakusu(sei: list, mei: list):
     Returns:
         numpy.int64: 画数の合計
     """
-    calc_sei = 0
     calc_mei = 0
 
-    for a in range(len(sei)):
-        calc_sei += sei[a]
-
     for a in range(len(mei)):
-        calc_mei += mei[a]
+        calc_mei += mei[a][0]
 
-    return calc_sei, calc_mei
+    return calc_mei
+
+
+def calc_soukaku(sei: int, mei: int):
+    calc_sokaku = sei + mei
+    return calc_sokaku
+
+
+def calc_zinkaku(sei: list, mei: list):
+    calc_zinkaku = sei[-1][0] + mei[0][0]
+    return calc_zinkaku
+
+
+def calc_gaikaku(sei: list, mei: list):
+    calc_gaikaku = sei[0][0] + mei[-1][0]
+    return calc_gaikaku
+
+
+def get_kikkyo(kaku_count: int, result_list: int):
+    kikkyo = result_list[kaku_count]["kikkyo"]
+    return kikkyo
+
+
+def get_msg(kaku_count: int, result_list: list):
+    msg = result_list[kaku_count]["message"]
+    return msg
 
 
 def main():
-    input_sei = "中川"
-    input_mei = "しょうこ"
+    input_sei = "相戸"
+    input_mei = "ゆづな"
 
     print(f"あなたの名前は「{input_sei} {input_mei}」ですね。")
 
-    dir_csv = pathlib.Path("D:/Git/name-fortune/production/kanji-kakusu.csv")
-    # dir_csv = pathlib.Path("D:/kanji-kakusu.csv")
+    kanji_json_dir = pathlib.Path(
+        "Z:/マイドライブ/python/junkbox/name-fortune/production/kanji-kakusu.json"
+    )
+    kana_json_dir = pathlib.Path(
+        "Z:/マイドライブ/python/junkbox/name-fortune/production/kana-kakusu.json"
+    )
 
-    result_moji_list, result_kakusyu_list = read_csv(dir_csv)
+    result_json_dir = pathlib.Path(
+        "Z:/マイドライブ/python/junkbox/name-fortune/production/result-data.json"
+    )
+
+    result_kanji_list, result_kakusyu_list, result_json_list = read_json(
+        kanji_json_dir, kana_json_dir, result_json_dir
+    )
 
     result_sei, result_mei = kakushu_check(
-        input_sei, input_mei, result_moji_list, result_kakusyu_list
+        input_sei, input_mei, result_kanji_list, result_kakusyu_list
     )
-    calc_sei, calc_mei = calc_kakusu(result_sei, result_mei)
 
-    print(f"　姓：{calc_sei}\n　名：{calc_mei}\n合計：{calc_sei+calc_mei}")
+    tenkaku_count = calc_tenkaku(result_sei)
+    chikaku_count = calc_chikaku(result_mei)
+    sokaku_count = calc_soukaku(tenkaku_count, chikaku_count)
+    zinkaku_count = calc_zinkaku(result_sei, result_mei)
+    gaikaku_count = calc_gaikaku(result_sei, result_mei)
+
+    print("\n結果")
+    print(
+        f"天格（姓）：{tenkaku_count}画・{get_kikkyo(tenkaku_count,result_json_list)}・{get_msg(tenkaku_count,result_json_list)}"
+    )
+
+    print(
+        f"地格（名）：{chikaku_count}画・{get_kikkyo(chikaku_count,result_json_list)}・{get_msg(chikaku_count,result_json_list)}"
+    )
+    print(
+        f"総格（姓+名）：{sokaku_count}画・{get_kikkyo(sokaku_count,result_json_list)}・{get_msg(sokaku_count,result_json_list)}"
+    )
+    print(
+        f"人格（姓の一番下・名の上）：{zinkaku_count}画・{get_kikkyo(zinkaku_count,result_json_list)}・{get_msg(zinkaku_count,result_json_list)}"
+    )
+    print(
+        f"外格（姓の一番上・名の下）：{gaikaku_count}画・{get_kikkyo(gaikaku_count,result_json_list)}・{get_msg(gaikaku_count,result_json_list)}"
+    )
 
 
 if __name__ == "__main__":
