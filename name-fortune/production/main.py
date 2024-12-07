@@ -1,7 +1,5 @@
 import json
 import pathlib
-import kyokaku_data
-import message_data
 
 
 def print_dbg(msg):
@@ -64,15 +62,15 @@ def kakushu_check(sei: str, mei: str, kanji_list: list, kana_list: list) -> list
         list: 姓の画数データ
         list: 名の画数データ
     """
-    result_sei = []
-    result_mei = []
+    result_sei: list = []
+    result_mei: list = []
 
     # 画数の取得
     print("画数を取得しています。")
 
     try:
         for a in range(len(sei)):
-            found = False
+            found: bool = False
             for i in range(len(kanji_list)):
                 if sei[a] == kanji_list[i]["kanji"]:
                     result_sei.append(kanji_list[i]["kakusu"])
@@ -85,7 +83,7 @@ def kakushu_check(sei: str, mei: str, kanji_list: list, kana_list: list) -> list
                 raise ValueError(f"姓の文字「{sei[a]}」が見つかりませんでした。")
 
         for a in range(len(mei)):
-            found = False
+            found: bool = False
             for i in range(len(kanji_list)):
                 if mei[a] == kanji_list[i]["kanji"]:
                     result_mei.append(kanji_list[i]["kakusu"])
@@ -114,7 +112,7 @@ def calc_tenkaku(sei: list) -> int:
         str: 吉凶
         str: メッセージ
     """
-    calc_sei = 0
+    calc_sei: int = 0
 
     for a in range(len(sei)):
         calc_sei += sei[a][0]
@@ -123,16 +121,15 @@ def calc_tenkaku(sei: list) -> int:
 
 
 def calc_chikaku(mei: list) -> int:
-    """地角を計算
+    """地格を計算
 
     Args:
-        sei (list): kakushu_check()で取得した姓の画数
         mei (list): kakushu_check()で取得した名の画数
 
     Returns:
-        numpy.int64: 画数の合計
+        int: 画数の合計
     """
-    calc_mei = 0
+    calc_mei: int = 0
 
     for a in range(len(mei)):
         calc_mei += mei[a][0]
@@ -140,45 +137,90 @@ def calc_chikaku(mei: list) -> int:
     return calc_mei
 
 
-def calc_soukaku(sei: int, mei: int):
-    calc_sokaku = sei + mei
+def calc_soukaku(sei: int, mei: int) -> int:
+    """総画を計算
+
+    Args:
+        sei (int): 姓の合計数（calc_tenkaku）
+        mei (int): 名の合計数（calc_chikaku）
+
+    Returns:
+        int: 姓+名の合計（総画）
+    """
+    calc_sokaku: int = sei + mei
     return calc_sokaku
 
 
-def calc_zinkaku(sei: list, mei: list):
-    calc_zinkaku = sei[-1][0] + mei[0][0]
+def calc_zinkaku(sei: list, mei: list) -> int:
+    """人格を計算
+
+    Args:
+        sei (list): kakushu_check()で取得した姓の画数
+        mei (list): kakushu_check()で取得した名の画数
+
+    Returns:
+        int: 姓の最後と名の最初を合計
+    """
+    calc_zinkaku: int = sei[-1][0] + mei[0][0]
     return calc_zinkaku
 
 
-def calc_gaikaku(sei: list, mei: list):
-    calc_gaikaku = sei[0][0] + mei[-1][0]
+def calc_gaikaku(sei: list, mei: list) -> int:
+    """外格を計算
+
+    Args:
+        sei (list): kakushu_check()で取得した姓の画数
+        mei (list): kakushu_check()で取得した名の画数
+
+    Returns:
+        _int: 姓の最初と名の最後を合計
+    """
+    calc_gaikaku: int = sei[0][0] + mei[-1][0]
     return calc_gaikaku
 
 
-def get_kikkyo(kaku_count: int, result_list: int):
-    kikkyo = result_list[kaku_count]["kikkyo"]
+def get_kikkyo(kaku_count: int, result_list: list) -> str:
+    """吉凶のテキストを取得
+
+    Args:
+        kaku_count (int): 画数
+        result_list (list): 結果リスト
+
+    Returns:
+        str: 吉凶のテキスト
+    """
+    kikkyo: str = result_list[kaku_count]["kikkyo"]
     return kikkyo
 
 
 def get_msg(kaku_count: int, result_list: list):
-    msg = result_list[kaku_count]["message"]
+    """結果のテキストを取得
+
+    Args:
+        kaku_count (int): 画数
+        result_list (list): 結果リスト
+
+    Returns:
+        str: 結果のテキスト
+    """
+    msg: str = result_list[kaku_count]["message"]
     return msg
 
 
 def main():
-    input_sei = "相戸"
-    input_mei = "ゆづな"
+    input_sei: str = "相戸"
+    input_mei: str = "ゆづな"
 
     print(f"あなたの名前は「{input_sei} {input_mei}」ですね。")
 
-    kanji_json_dir = pathlib.Path(
+    kanji_json_dir: pathlib = pathlib.Path(
         "Z:/マイドライブ/python/junkbox/name-fortune/production/kanji-kakusu.json"
     )
-    kana_json_dir = pathlib.Path(
+    kana_json_dir: pathlib = pathlib.Path(
         "Z:/マイドライブ/python/junkbox/name-fortune/production/kana-kakusu.json"
     )
 
-    result_json_dir = pathlib.Path(
+    result_json_dir: pathlib = pathlib.Path(
         "Z:/マイドライブ/python/junkbox/name-fortune/production/result-data.json"
     )
 
@@ -190,11 +232,11 @@ def main():
         input_sei, input_mei, result_kanji_list, result_kakusyu_list
     )
 
-    tenkaku_count = calc_tenkaku(result_sei)
-    chikaku_count = calc_chikaku(result_mei)
-    sokaku_count = calc_soukaku(tenkaku_count, chikaku_count)
-    zinkaku_count = calc_zinkaku(result_sei, result_mei)
-    gaikaku_count = calc_gaikaku(result_sei, result_mei)
+    tenkaku_count: int = calc_tenkaku(result_sei)
+    chikaku_count: int = calc_chikaku(result_mei)
+    sokaku_count: int = calc_soukaku(tenkaku_count, chikaku_count)
+    zinkaku_count: int = calc_zinkaku(result_sei, result_mei)
+    gaikaku_count: int = calc_gaikaku(result_sei, result_mei)
 
     print("\n結果")
     print(
