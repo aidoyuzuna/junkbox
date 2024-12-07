@@ -1,0 +1,412 @@
+[
+	{
+		"index": [0],
+		"kikkyo": "エラー",
+		"message": "エラー"
+	},
+	{
+		"index": [1],
+		"kikkyo": "大吉",
+		"message": "飛躍を表す根源数"
+	},
+	{
+		"index": [2],
+		"kikkyo": "凶",
+		"message": "物質面や精神面が不安定"
+	},
+	{
+		"index": [3],
+		"kikkyo": "大吉",
+		"message": "感性で才能が開花"
+	},
+	{
+		"index": [4],
+		"kikkyo": "凶",
+		"message": "努力が報われない"
+	},
+	{
+		"index": [5],
+		"kikkyo": "大吉",
+		"message": "行動力で信頼を得る"
+	},
+	{
+		"index": [6],
+		"kikkyo": "大吉",
+		"message": "大業を成せる"
+	},
+	{
+		"index": [7],
+		"kikkyo": "吉",
+		"message": "目標を掲げ幸福に"
+	},
+	{
+		"index": [8],
+		"kikkyo": "吉",
+		"message": "努力で成果を得る"
+	},
+	{
+		"index": [9],
+		"kikkyo": "凶",
+		"message": "感情の浮沈で急変"
+	},
+	{
+		"index": [10],
+		"kikkyo": "凶",
+		"message": "精神面が不安定"
+	},
+	{
+		"index": [11],
+		"kikkyo": "大吉",
+		"message": "堅実で人生が安定"
+	},
+	{
+		"index": [12],
+		"kikkyo": "凶",
+		"message": "積極性や決断に欠ける"
+	},
+	{
+		"index": [13],
+		"kikkyo": "大吉",
+		"message": "あふれる魅力で成功"
+	},
+	{
+		"index": [14],
+		"kikkyo": "凶",
+		"message": "不平不満が多い"
+	},
+	{
+		"index": [15],
+		"kikkyo": "大吉",
+		"message": "幸運を呼び込み安泰"
+	},
+	{
+		"index": [16],
+		"kikkyo": "大吉",
+		"message": "富と名声を得る"
+	},
+	{
+		"index": [17],
+		"kikkyo": "吉",
+		"message": "一途な信念で目標達成"
+	},
+	{
+		"index": [18],
+		"kikkyo": "吉",
+		"message": "努力と積極性で勝利"
+	},
+	{
+		"index": [19],
+		"kikkyo": "凶",
+		"message": "流されやすく急変"
+	},
+	{
+		"index": [20],
+		"kikkyo": "凶",
+		"message": "誘惑に弱く急変"
+	},
+	{
+		"index": [21],
+		"kikkyo": "大吉",
+		"message": "精神力で飛躍"
+	},
+	{
+		"index": [22],
+		"kikkyo": "凶",
+		"message": "何事も中途挫折"
+	},
+	{
+		"index": [23],
+		"kikkyo": "大吉",
+		"message": "順調に躍進"
+	},
+	{
+		"index": [24],
+		"kikkyo": "大吉",
+		"message": "人気運と金運を持つ"
+	},
+	{
+		"index": [25],
+		"kikkyo": "大吉",
+		"message": "意志が頑固な実力派"
+	},
+	{
+		"index": [26],
+		"kikkyo": "凶",
+		"message": "言動のムラが仇となる"
+	},
+	{
+		"index": [27],
+		"kikkyo": "吉凶混合",
+		"message": "頑固さが孤立を呼ぶ"
+	},
+	{
+		"index": [28],
+		"kikkyo": "凶",
+		"message": "融通がきかない"
+	},
+	{
+		"index": [29],
+		"kikkyo": "大吉",
+		"message": "芸術分野で才能を発揮"
+	},
+	{
+		"index": [30],
+		"kikkyo": "吉凶混合",
+		"message": "独善的な態度が仇となる"
+	},
+	{
+		"index": [31],
+		"kikkyo": "大吉",
+		"message": "努力が着実に実を結ぶ"
+	},
+	{
+		"index": [32],
+		"kikkyo": "大吉",
+		"message": "富と名声を築く"
+	},
+	{
+		"index": [33],
+		"kikkyo": "大吉",
+		"message": "行動力のある野心家"
+	},
+	{
+		"index": [34],
+		"kikkyo": "凶",
+		"message": "流されやすく急変"
+	},
+	{
+		"index": [35],
+		"kikkyo": "吉",
+		"message": "温厚さと実力で幸福に"
+	},
+	{
+		"index": [36],
+		"kikkyo": "吉凶混合",
+		"message": "志持つが中途挫折"
+	},
+	{
+		"index": [37],
+		"kikkyo": "大吉",
+		"message": "末広がりに努力が実る"
+	},
+	{
+		"index": [38],
+		"kikkyo": "吉",
+		"message": "芸術方面で才能を発揮"
+	},
+	{
+		"index": [39],
+		"kikkyo": "大吉",
+		"message": "逆境を乗り越え躍進"
+	},
+	{
+		"index": [40],
+		"kikkyo": "吉凶混合",
+		"message": "虚栄心から急変"
+	},
+	{
+		"index": [41],
+		"kikkyo": "大吉",
+		"message": "運と実力で早くから飛躍"
+	},
+	{
+		"index": [42],
+		"kikkyo": "吉凶混合",
+		"message": "人任せで急変"
+	},
+	{
+		"index": [43],
+		"kikkyo": "凶",
+		"message": "内情の激しさが悪化させる"
+	},
+	{
+		"index": [44],
+		"kikkyo": "凶",
+		"message": "急変しやすい"
+	},
+	{
+		"index": [45],
+		"kikkyo": "大吉",
+		"message": "広い分野で活躍"
+	},
+	{
+		"index": [46],
+		"kikkyo": "凶",
+		"message": "人にだまされやすい"
+	},
+	{
+		"index": [47],
+		"kikkyo": "大吉",
+		"message": "交際範囲がカギ"
+	},
+	{
+		"index": [48],
+		"kikkyo": "大吉",
+		"message": "天賦の才能を生かせる"
+	},
+	{
+		"index": [49],
+		"kikkyo": "凶",
+		"message": "善し悪しが交差する"
+	},
+	{
+		"index": [50],
+		"kikkyo": "凶",
+		"message": "浮き沈みを繰り返す"
+	},
+	{
+		"index": [51],
+		"kikkyo": "吉凶混合",
+		"message": "繊細でマイペース"
+	},
+	{
+		"index": [52],
+		"kikkyo": "大吉",
+		"message": "信頼が強く飛躍"
+	},
+	{
+		"index": [53],
+		"kikkyo": "吉凶混合",
+		"message": "目標達成しにくい"
+	},
+	{
+		"index": [54],
+		"kikkyo": "凶",
+		"message": "気苦労が絶えない"
+	},
+	{
+		"index": [55],
+		"kikkyo": "吉凶混合",
+		"message": "強引さが仇となる"
+	},
+	{
+		"index": [56],
+		"kikkyo": "凶",
+		"message": "精神面がもろい"
+	},
+	{
+		"index": [57],
+		"kikkyo": "吉",
+		"message": "困難を乗り越える"
+	},
+	{
+		"index": [58],
+		"kikkyo": "吉",
+		"message": "強い精神力で飛躍"
+	},
+	{
+		"index": [59],
+		"kikkyo": "凶",
+		"message": "世間から遠ざかる"
+	},
+	{
+		"index": [60],
+		"kikkyo": "凶",
+		"message": "情緒不安定"
+	},
+	{
+		"index": [61],
+		"kikkyo": "吉",
+		"message": "努力が実を結ぶ"
+	},
+	{
+		"index": [62],
+		"kikkyo": "凶",
+		"message": "努力むなしく空振り"
+	},
+	{
+		"index": [63],
+		"kikkyo": "大吉",
+		"message": "順風満帆な人生に"
+	},
+	{
+		"index": [64],
+		"kikkyo": "凶",
+		"message": "金銭問題が出る"
+	},
+	{
+		"index": [65],
+		"kikkyo": "大吉",
+		"message": "財を築き繁栄"
+	},
+	{
+		"index": [66],
+		"kikkyo": "凶",
+		"message": "四面楚歌の状態になる"
+	},
+	{
+		"index": [67],
+		"kikkyo": "大吉",
+		"message": "周囲からの支持を受ける"
+	},
+	{
+		"index": [68],
+		"kikkyo": "大吉",
+		"message": "思慮深く幸運を招く"
+	},
+	{
+		"index": [69],
+		"kikkyo": "凶",
+		"message": "精神的に困窮"
+	},
+	{
+		"index": [70],
+		"kikkyo": "凶",
+		"message": "怠惰が運気を落とす"
+	},
+	{
+		"index": [71],
+		"kikkyo": "吉凶混合",
+		"message": "いばらの道を切り開く"
+	},
+	{
+		"index": [72],
+		"kikkyo": "吉凶混合",
+		"message": "悩みが絶えない"
+	},
+	{
+		"index": [73],
+		"kikkyo": "吉凶混合",
+		"message": "下積みは長いが幸福に"
+	},
+	{
+		"index": [74],
+		"kikkyo": "凶",
+		"message": "困難がつきまとう"
+	},
+	{
+		"index": [75],
+		"kikkyo": "吉凶混合",
+		"message": "堅実で幸福な人生に"
+	},
+	{
+		"index": [76],
+		"kikkyo": "凶",
+		"message": "自暴自棄で中途挫折"
+	},
+	{
+		"index": [77],
+		"kikkyo": "吉凶混合",
+		"message": "善し悪しの差がはっきり"
+	},
+	{
+		"index": [78],
+		"kikkyo": "吉凶混合",
+		"message": "孤軍奮闘して成功"
+	},
+	{
+		"index": [79],
+		"kikkyo": "凶",
+		"message": "理想の世界に入り込む"
+	},
+	{
+		"index": [80],
+		"kikkyo": "凶",
+		"message": "気力を失ってしま"
+	},
+	{
+		"index": [81],
+		"kikkyo": "幸福を一身に集める",
+		"message": "大吉"
+	}
+]
